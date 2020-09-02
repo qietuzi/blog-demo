@@ -1,0 +1,59 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+.home {
+  background: #fff;
+}
+
+.child-view {
+  width: 100%;
+  position: absolute;
+  transition: all .8s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.right-slide-in-enter{
+  opacity: 0;
+  transform: translate(20%, 0);
+}
+.right-slide-in-enter-active {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.right-slide-in-exit{
+  opacity: 1;
+}
+.right-slide-in-exit-active{
+  opacity: 0;
+}
+
+.left-slide-in-enter{
+  opacity: 0;
+  transform: translate(-20%, 0);
+}
+.left-slide-in-enter-active {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.left-slide-in-exit{
+  opacity: 1;
+}
+.left-slide-in-exit-active{
+  opacity: 0;
+}

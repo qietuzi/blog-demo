@@ -1,0 +1,10 @@
+<div id="app">
+  <div id="nav">
+    <a routerLink='/a' routerLinkActive='router-link-exact-active'>Page A</a> | 
+    <a routerLink='/b' routerLinkActive='router-link-exact-active'>Page B</a> | 
+    <a routerLink='/c' routerLinkActive='router-link-exact-active'>Page C</a>
+  </div>
+  <div [@routeAnimations]="prepareRoute(outlet)" >
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+</div>
