@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>curve</title>
+    <style>
+        #line,
+        #curve,
+        #bezier {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="line" width="400" height="300"></canvas>
+    <canvas id="curve" width="400" height="300"></canvas>
+    <canvas id="bezier" width="400" height="300"></canvas>
+    <script>
+        var genData = function (len = 20) {
+            // var data = []
+            // for (var i = 0; i < len; i++) {
+            //     data.push(Math.round(Math.random() * 100))
+            // }
+            // return data;
+            return [58, 42, 88, 2, 33, 58, 35, 4, 68, 33].map(item => 
+               - item * 1.6 + 150
+            )
+        }
+        var drwaLine = function (data) {
+            var left = 0
+            var animationId = 0
+            var ctx = document.querySelector('#line').getContext('2d')
+            var _draw = function () {
+                if (left === 400) {
+                    window.cancelAnimationFrame(animationId)
+                    return
+                }
+                left = left + 2
+                ctx.clearRect(0, 0, 400, 300)
+                ctx.beginPath();
+                ctx.moveTo(0, data[0])
+                for (var i = 0; i < data.length; i++) {
+                    ctx.lineTo(20 * i, data[i])
+                }
+                ctx.stroke()
+
+                ctx.beginPath();
+                ctx.moveTo(0, data[0])
+                // 二次曲线可以先求两点之间的中点，让曲线的终点是这个中点即可，当然如果要经过首尾的点的话，就要排除一下。
+                for (let i = 1; i < data.length; i++) {
+                    ctx.bezierCurveTo(
+                        (i - 1) * 20 + (i * 20 - (i - 1) * 20) / 2,
+                        data[i - 1],
+                        (i - 1) * 20 + (i * 20 - (i - 1) * 20) / 2,
+                        data[i],
+                        (i) * 20,
+                        data[i]);
+                }
+                ctx.stroke()
+
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(left, 0, 400, 300)
+                animationId = requestAnimationFrame(_draw)
+            }
+            animationId = requestAnimationFrame(_draw)
+        }
+        var drawCurve = function (data) {
+            var left = 0
+            var animationId = 0
+            var ctx = document.querySelector('#curve').getContext('2d')
+            var _draw = function () {
+                if (left === 400) {
+                    window.cancelAnimationFrame(animationId)
+                    return
+                }
+                left = left + 2
+                ctx.clearRect(0, 0, 400, 300)
+                ctx.beginPath();
+                ctx.moveTo(0, data[0])
+                // 二次曲线可以先求两点之间的中点，让曲线的终点是这个中点即可，当然如果要经过首尾的点的话，就要排除一下。
+                for (var i = 1; i < data.length - 2; i++) {
+                    var centerX = (i * 20 + (i + 1) * 20) / 2
+                    var centerY = (data[i] + data[i + 1]) / 2
+                    ctx.quadraticCurveTo(i * 20, data[i], centerX, centerY)
+                }
+                ctx.quadraticCurveTo(i * 20, data[i], (i + 1) * 20, data[i + 1])
+
+                ctx.stroke()
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(left, 0, 400, 300)
+                animationId = requestAnimationFrame(_draw)
+            }
+            animationId = requestAnimationFrame(_draw)
+        }
+        var drawBezier = function (data) {
+            var left = 0
+            var animationId = 0
+            var ctx = document.querySelector('#bezier').getContext('2d')
+            var _draw = function () {
+                if (left === 400) {
+                    window.cancelAnimationFrame(animationId)
+                    return
+                }
+                left = left + 2
+                ctx.clearRect(0, 0, 400, 300)
+                ctx.beginPath();
+                ctx.moveTo(0, data[0])
+                for (let i = 1; i < data.length; i++) {
+                    ctx.bezierCurveTo(
+                        (i - 1) * 20 + (i * 20 - (i - 1) * 20) / 2,
+                        data[i - 1],
+                        (i - 1) * 20 + (i * 20 - (i - 1) * 20) / 2,
+                        data[i],
+                        (i) * 20,
+                        data[i]);
+                }
+
+                ctx.stroke()
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(left, 0, 400, 300)
+                animationId = requestAnimationFrame(_draw)
+            }
+            animationId = requestAnimationFrame(_draw)
+        }
+        var data = genData()
+        drwaLine(data);
+        drawCurve(data);
+        drawBezier(data);
+    </script>
+</body>
+
+</html>
